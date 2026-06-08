@@ -17,21 +17,24 @@
   .btn-sm { font-size: 12px; padding: 5px 12px; }
   input[type=text], input[type=number] { background: #111; border: 0.5px solid #333; border-radius: 8px; color: #e8e8e8; font-size: 13px; padding: 7px 12px; outline: none; width: 100%; }
   input:focus { border-color: #555; }
-  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
   .stat { background: #111; border-radius: 8px; padding: 12px; }
-  .stat-label { font-size: 12px; color: #666; margin-bottom: 4px; }
-  .stat-val { font-size: 22px; font-weight: 600; color: #fff; }
+  .stat-label { font-size: 11px; color: #666; margin-bottom: 4px; }
+  .stat-val { font-size: 20px; font-weight: 600; color: #fff; }
   .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
   .status { font-size: 13px; color: #666; margin-bottom: 12px; min-height: 18px; }
-  .track-header { display: grid; grid-template-columns: 1fr 90px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
-  .track-row { display: grid; grid-template-columns: 1fr 90px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; cursor: pointer; }
+  .track-header { display: grid; grid-template-columns: 1fr 90px 32px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
+  .track-row { display: grid; grid-template-columns: 1fr 90px 32px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; cursor: pointer; }
   .track-row:hover { background: #1a1a1a; }
   .track-row.selected { background: #1a2a1a; border-color: #1DB95440; }
   .track-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e8e8e8; }
   .track-artist { font-size: 11px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bpm-cell { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+  .bpm-cell { display: flex; align-items: center; justify-content: flex-end; gap: 5px; }
   .bpm-val { font-size: 14px; font-weight: 600; white-space: nowrap; }
-  .key-tag { font-size: 10px; padding: 2px 6px; border-radius: 10px; background: #1a1a1a; color: #666; border: 0.5px solid #333; white-space: nowrap; }
+  .key-tag { font-size: 10px; padding: 2px 5px; border-radius: 10px; background: #1a1a1a; color: #666; border: 0.5px solid #333; white-space: nowrap; }
+  .doubled-tag { font-size: 9px; padding: 1px 4px; border-radius: 8px; background: #2a1a00; color: #EF9F27; border: 0.5px solid #EF9F2740; white-space: nowrap; }
+  .remove-btn { font-size: 16px; color: #333; background: none; border: none; cursor: pointer; padding: 2px 4px; line-height: 1; border-radius: 4px; }
+  .remove-btn:hover { color: #e24b4a; background: #2a1a1a; }
   .pl-section { border-top: 0.5px solid #222; padding-top: 16px; margin-top: 16px; }
   .pl-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .pl-row input { flex: 1; min-width: 160px; width: auto; }
@@ -41,19 +44,16 @@
   #auth-section h1 { font-size: 28px; margin-bottom: 8px; }
   #auth-section .sub { margin-bottom: 32px; }
   .spotify-icon { width: 48px; height: 48px; margin: 0 auto 16px; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 0.5px solid #222; }
-  .tab { font-size: 13px; padding: 8px 16px; cursor: pointer; border-radius: 8px 8px 0 0; color: #666; border: none; background: transparent; }
-  .tab.active { color: #fff; background: #1a1a1a; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-  .search-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .search-row input { flex: 1; }
-  .search-result { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #111; margin-bottom: 6px; border: 0.5px solid #1e1e1e; }
+  .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .filter-row label { font-size: 13px; color: #888; white-space: nowrap; }
+  .add-section { border-top: 0.5px solid #222; padding-top: 16px; margin-top: 4px; margin-bottom: 4px; }
+  .search-results-dropdown { background: #1a1a1a; border: 0.5px solid #333; border-radius: 8px; margin-top: 4px; overflow: hidden; }
+  .search-result-item { padding: 9px 12px; cursor: pointer; border-bottom: 0.5px solid #222; transition: background 0.1s; }
+  .search-result-item:last-child { border-bottom: none; }
+  .search-result-item:hover { background: #252525; }
   .footer { text-align: center; padding: 24px 0 8px; font-size: 12px; color: #444; }
   .footer a { color: #666; text-decoration: none; }
   .footer a:hover { color: #999; }
-  .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .filter-row label { font-size: 13px; color: #888; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -61,7 +61,7 @@
 <div id="auth-section">
   <svg class="spotify-icon" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.233 1.328a.78.78 0 01.257 1.072zm.105-2.835C14.692 9.15 9.375 8.977 6.297 9.9a.937.937 0 11-.543-1.794c3.532-1.072 9.404-.865 13.115 1.339a.937.937 0 01-.955 1.622z"/></svg>
   <h1>Spotify BPM Tool</h1>
-  <p class="sub">Nézd meg hallgatott dalaid tempóját, keress bármilyen számra BPM-et.</p>
+  <p class="sub">Nézd meg hallgatott dalaid tempóját, csinálj BPM-alapú playlistet.</p>
   <button class="btn btn-green" onclick="startAuth()" style="font-size:15px; padding:12px 28px;">Bejelentkezés Spotify-ra</button>
   <p id="auth-error" style="color:#e24b4a; font-size:13px; margin-top:16px;"></p>
   <div class="footer" style="margin-top:48px;">BPM adatok: <a href="https://getsongbpm.com" target="_blank">GetSongBPM</a></div>
@@ -71,61 +71,59 @@
   <h1>Spotify BPM Tool</h1>
   <p class="sub" id="user-label">Bejelentkezve</p>
 
-  <div class="tabs">
-    <button class="tab active" onclick="switchTab('my-tracks')">⭐ Saját dalok</button>
-    <button class="tab" onclick="switchTab('search')">🔍 BPM kereső</button>
+  <div class="stats">
+    <div class="stat"><div class="stat-label">Betöltött dalok</div><div class="stat-val" id="stat-total">—</div></div>
+    <div class="stat"><div class="stat-label">Kiválasztott</div><div class="stat-val" id="stat-sel">0</div></div>
+    <div class="stat"><div class="stat-label">Átlag BPM</div><div class="stat-val" id="stat-avg">—</div></div>
   </div>
 
-  <div class="tab-content active" id="tab-my-tracks">
-    <div class="stats">
-      <div class="stat"><div class="stat-label">Betöltött dalok</div><div class="stat-val" id="stat-total">—</div></div>
-      <div class="stat"><div class="stat-label">Kiválasztott</div><div class="stat-val" id="stat-sel">0</div></div>
+  <div class="card">
+    <div class="controls">
+      <button class="btn" onclick="loadTopTracks()">⭐ Top dalok</button>
+      <button class="btn" onclick="loadRecommended()">🎯 Ajánlott dalok</button>
+      <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
     </div>
-    <div class="card">
-      <div class="controls">
-        <button class="btn" onclick="loadTopTracks()">⭐ Top dalok</button>
-        <button class="btn" onclick="loadRecommended()">🎯 Ajánlott dalok</button>
-        <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
-      </div>
-      <div class="filter-row" id="filter-row" style="display:none;">
-        <label>BPM szűrő:</label>
-        <input type="number" id="bpm-min" value="0" style="width:64px;">
-        <span style="color:#555;">–</span>
-        <input type="number" id="bpm-max" value="200" style="width:64px;">
-        <button class="btn btn-sm" onclick="applyBpmFilter()">Szűrés</button>
-      </div>
-      <div class="status" id="status"></div>
-      <div class="controls" id="sort-controls" style="display:none; margin-bottom:8px;">
-        <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
-        <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
-        <button class="btn btn-sm" onclick="sortBy('name')">Név ↕</button>
-        <button class="btn btn-sm" onclick="sortBy('artist')">Előadó ↕</button>
-        <button class="btn btn-sm" onclick="sortBy('bpm')">BPM ↕</button>
-      </div>
-      <div class="track-header" id="track-header" style="display:none;">
-        <span>Dal / Előadó</span><span style="text-align:right;">BPM / Hangnem</span>
-      </div>
-      <div id="track-list"></div>
-      <div class="pl-section" id="pl-section" style="display:none;">
-        <p style="font-size:14px; font-weight:500; margin-bottom:10px;">Playlist létrehozása a kiválasztottakból</p>
-        <div class="pl-row">
-          <input type="text" id="pl-name" placeholder="Playlist neve...">
-          <button class="btn btn-green" onclick="createPlaylist()">+ Létrehozás</button>
-        </div>
-        <div id="pl-msg"></div>
-      </div>
-    </div>
-  </div>
 
-  <div class="tab-content" id="tab-search">
-    <div class="card">
-      <p style="font-size:13px; color:#666; margin-bottom:12px;">Keress rá bármilyen dalra vagy előadóra — BPM és hangnem adatokkal.</p>
-      <div class="search-row">
-        <input type="text" id="search-input" placeholder="Dal vagy előadó neve..." onkeydown="if(event.key==='Enter') doSearch()">
-        <button class="btn btn-green" onclick="doSearch()" style="white-space:nowrap; width:auto;">Keresés</button>
+    <div class="filter-row" id="filter-row" style="display:none;">
+      <label>BPM szűrő:</label>
+      <input type="number" id="bpm-min" value="0" style="width:64px;">
+      <span style="color:#555;">–</span>
+      <input type="number" id="bpm-max" value="200" style="width:64px;">
+      <button class="btn btn-sm" onclick="applyBpmFilter()">Szűrés</button>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div class="controls" id="sort-controls" style="display:none; margin-bottom:8px;">
+      <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
+      <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
+      <button class="btn btn-sm" onclick="sortBy('name')">Név ↕</button>
+      <button class="btn btn-sm" onclick="sortBy('artist')">Előadó ↕</button>
+      <button class="btn btn-sm" onclick="sortBy('bpm')">BPM ↕</button>
+    </div>
+
+    <div class="track-header" id="track-header" style="display:none;">
+      <span>Dal / Előadó</span><span style="text-align:right;">BPM / Hangnem</span><span></span>
+    </div>
+    <div id="track-list"></div>
+
+    <!-- Dal hozzáadása -->
+    <div class="add-section" id="add-section" style="display:none;">
+      <p style="font-size:13px; font-weight:500; margin-bottom:10px; color:#aaa;">+ Dal hozzáadása</p>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="add-input" placeholder="Dal vagy előadó neve..." onkeydown="if(event.key==='Enter') searchToAdd()" style="flex:1;">
+        <button class="btn btn-sm btn-green" onclick="searchToAdd()" style="white-space:nowrap; width:auto;">Keresés</button>
       </div>
-      <div id="search-status" style="font-size:13px; color:#666; min-height:18px; margin-bottom:8px;"></div>
-      <div id="search-results"></div>
+      <div id="add-results"></div>
+    </div>
+
+    <div class="pl-section" id="pl-section" style="display:none;">
+      <p style="font-size:14px; font-weight:500; margin-bottom:10px;">Playlist létrehozása a kiválasztottakból</p>
+      <div class="pl-row">
+        <input type="text" id="pl-name" placeholder="Playlist neve...">
+        <button class="btn btn-green" onclick="createPlaylist()">+ Létrehozás</button>
+      </div>
+      <div id="pl-msg"></div>
     </div>
   </div>
 
@@ -149,10 +147,13 @@ let filteredTracks = [];
 let selectedUris = new Set();
 let sortDir = { name: 1, artist: 1, bpm: 1 };
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['my-tracks','search'][i] === tab));
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
+function displayBpm(rawBpm) {
+  if (!rawBpm) return null;
+  return rawBpm < 91 ? rawBpm * 2 : rawBpm;
+}
+
+function isDoubled(rawBpm) {
+  return rawBpm && rawBpm < 91;
 }
 
 function startAuth() {
@@ -217,11 +218,10 @@ async function spPost(path, body) {
 function setStatus(m) { document.getElementById('status').textContent = m; }
 
 async function getBpm(name, artist) {
-  // Try with first word of track name first, then fall back to artist first word
   const queries = [
     name.split(' ')[0],
     name.split(' ').slice(0,2).join('+'),
-    artist.split(' ')[0]
+    artist.split(',')[0].trim().split(' ')[0]
   ];
   for (const q of queries) {
     if (!q || q.length < 2) continue;
@@ -229,7 +229,6 @@ async function getBpm(name, artist) {
       const res = await fetch(`${PROXY}?lookup=${encodeURIComponent(q)}&type=song`);
       const data = await res.json();
       if (data.search && Array.isArray(data.search) && data.search.length > 0) {
-        // Find best match: title or artist matches
         const nameLower = name.toLowerCase();
         const artistLower = artist.toLowerCase();
         const match = data.search.find(s =>
@@ -252,9 +251,9 @@ async function getBpm(name, artist) {
 
 function bpmColor(bpm) {
   if (!bpm) return '#555';
-  if (bpm < 90) return '#5DCAA5';
-  if (bpm < 120) return '#378ADD';
-  if (bpm < 150) return '#EF9F27';
+  if (bpm < 120) return '#5DCAA5';
+  if (bpm < 150) return '#378ADD';
+  if (bpm < 170) return '#EF9F27';
   return '#E24B4A';
 }
 
@@ -282,6 +281,7 @@ async function loadTracksWithBpm(tracks) {
   document.getElementById('sort-controls').style.display = 'flex';
   document.getElementById('track-header').style.display = 'grid';
   document.getElementById('filter-row').style.display = 'flex';
+  document.getElementById('add-section').style.display = 'block';
   updateStats();
   drawTracks();
   setStatus(`${allTracks.length} dal betöltve — BPM lekérése...`);
@@ -294,18 +294,21 @@ async function loadTracksWithBpm(tracks) {
     const fi = filteredTracks.findIndex(ft => ft.uri === t.uri);
     if (fi >= 0) { filteredTracks[fi].bpm = result.bpm; filteredTracks[fi].key = result.key; }
     updateTrackRow(t.uri, result.bpm, result.key);
+    updateStats();
     setStatus(`BPM lekérése: ${i+1} / ${allTracks.length}`);
   }
   setStatus(`${allTracks.length} dal — BPM kész.`);
 }
 
-function updateTrackRow(uri, bpm, key) {
+function updateTrackRow(uri, rawBpm, key) {
   const row = document.querySelector(`.track-row[data-uri="${CSS.escape(uri)}"]`);
   if (!row) return;
   const cell = row.querySelector('.bpm-cell');
   if (!cell) return;
+  const bpm = displayBpm(rawBpm);
   if (bpm) {
-    cell.innerHTML = `<span class="bpm-val" style="color:${bpmColor(bpm)}">${bpm}</span>${key ? `<span class="key-tag">${key}</span>` : ''}`;
+    const doubled = isDoubled(rawBpm);
+    cell.innerHTML = `<span class="bpm-val" style="color:${bpmColor(bpm)}">${bpm}</span>${doubled ? '<span class="doubled-tag">×2</span>' : ''}${key ? `<span class="key-tag">${key}</span>` : ''}`;
   } else {
     cell.innerHTML = `<span style="font-size:12px;color:#333;">—</span>`;
   }
@@ -314,7 +317,10 @@ function updateTrackRow(uri, bpm, key) {
 function applyBpmFilter() {
   const min = parseInt(document.getElementById('bpm-min').value) || 0;
   const max = parseInt(document.getElementById('bpm-max').value) || 999;
-  filteredTracks = allTracks.filter(t => t.bpm !== null && t.bpm >= min && t.bpm <= max);
+  filteredTracks = allTracks.filter(t => {
+    const bpm = displayBpm(t.bpm);
+    return bpm !== null && bpm >= min && bpm <= max;
+  });
   selectedUris = new Set([...selectedUris].filter(u => filteredTracks.some(t => t.uri === u)));
   drawTracks(); updateStats();
   setStatus(filteredTracks.length + ' dal a szűrő után.');
@@ -322,7 +328,7 @@ function applyBpmFilter() {
 
 function sortBy(key) {
   sortDir[key] *= -1;
-  if (key === 'bpm') filteredTracks.sort((a,b) => sortDir[key] * ((a.bpm||0) - (b.bpm||0)));
+  if (key === 'bpm') filteredTracks.sort((a,b) => sortDir[key] * ((displayBpm(a.bpm)||0) - (displayBpm(b.bpm)||0)));
   else filteredTracks.sort((a,b) => sortDir[key] * a[key].localeCompare(b[key]));
   drawTracks();
 }
@@ -346,17 +352,35 @@ function toggleTrack(uri) {
   updateStats();
 }
 
+function removeTrack(uri, e) {
+  e.stopPropagation();
+  allTracks = allTracks.filter(t => t.uri !== uri);
+  filteredTracks = filteredTracks.filter(t => t.uri !== uri);
+  selectedUris.delete(uri);
+  drawTracks();
+  updateStats();
+}
+
 function updateStats() {
   document.getElementById('stat-total').textContent = filteredTracks.length;
   document.getElementById('stat-sel').textContent = selectedUris.size;
+  const withBpm = filteredTracks.filter(t => t.bpm);
+  if (withBpm.length > 0) {
+    const avg = Math.round(withBpm.reduce((s,t) => s + displayBpm(t.bpm), 0) / withBpm.length);
+    document.getElementById('stat-avg').textContent = avg;
+  } else {
+    document.getElementById('stat-avg').textContent = '—';
+  }
   document.getElementById('pl-section').style.display = selectedUris.size > 0 ? 'block' : 'none';
 }
 
 function drawTracks() {
   const list = document.getElementById('track-list');
   list.innerHTML = filteredTracks.map(t => {
-    const bpmHtml = t.bpm
-      ? `<span class="bpm-val" style="color:${bpmColor(t.bpm)}">${t.bpm}</span>${t.key ? `<span class="key-tag">${t.key}</span>` : ''}`
+    const bpm = displayBpm(t.bpm);
+    const doubled = isDoubled(t.bpm);
+    const bpmHtml = bpm
+      ? `<span class="bpm-val" style="color:${bpmColor(bpm)}">${bpm}</span>${doubled ? '<span class="doubled-tag">×2</span>' : ''}${t.key ? `<span class="key-tag">${t.key}</span>` : ''}`
       : `<span style="font-size:12px;color:#333;">—</span>`;
     const uriEsc = t.uri.replace(/'/g, "\\'");
     return `<div class="track-row${selectedUris.has(t.uri)?' selected':''}" data-uri="${t.uri}" onclick="toggleTrack('${uriEsc}')">
@@ -365,6 +389,7 @@ function drawTracks() {
         <div class="track-artist">${t.artist}</div>
       </div>
       <div class="bpm-cell">${bpmHtml}</div>
+      <button class="remove-btn" onclick="removeTrack('${uriEsc}', event)" title="Eltávolítás">×</button>
     </div>`;
   }).join('');
 }
@@ -385,48 +410,43 @@ async function createPlaylist() {
   }
 }
 
-async function doSearch() {
-  const q = document.getElementById('search-input').value.trim();
+async function searchToAdd() {
+  const q = document.getElementById('add-input').value.trim();
   if (!q) return;
-  const statusEl = document.getElementById('search-status');
-  const resultsEl = document.getElementById('search-results');
-  statusEl.textContent = 'Keresés...';
-  resultsEl.innerHTML = '';
-  try {
-    const res = await fetch(`${PROXY}?lookup=${encodeURIComponent(q.split(' ')[0])}&type=both`);
-    const data = await res.json();
-    if (data.search && Array.isArray(data.search) && data.search.length > 0) {
-      statusEl.textContent = data.search.length + ' találat';
-      resultsEl.innerHTML = data.search.map(item => {
-        if (item.tempo) {
-          const bpm = Math.round(parseFloat(item.tempo));
-          return `<div class="search-result">
-            <div style="flex:1; min-width:0;">
-              <div class="track-name">${item.title || '—'}</div>
-              <div class="track-artist">${item.artist?.name || ''}</div>
-              ${item.key_of ? `<span class="key-tag" style="margin-top:4px; display:inline-block;">${item.key_of}</span>` : ''}
-            </div>
-            <div style="text-align:right; margin-left:12px;">
-              <div style="font-size:20px; font-weight:600; color:${bpmColor(bpm)}">${bpm > 0 ? bpm : '—'}</div>
-              <div style="font-size:11px; color:#555;">BPM</div>
-            </div>
-          </div>`;
-        } else {
-          return `<div class="search-result">
-            <div style="flex:1; min-width:0;">
-              <div class="track-name">${item.name || item.title || '—'}</div>
-              <div class="track-artist">${item.from || ''}</div>
-            </div>
-            <span style="font-size:12px; color:#555; margin-left:8px;">előadó</span>
-          </div>`;
-        }
-      }).join('');
-    } else {
-      statusEl.textContent = 'Nincs találat.';
-    }
-  } catch(e) {
-    statusEl.textContent = 'Hiba: ' + e.message;
+  const resultsEl = document.getElementById('add-results');
+  resultsEl.innerHTML = '<div style="font-size:13px;color:#555;padding:8px 0;">Keresés...</div>';
+  const d = await spGet('/search?q=' + encodeURIComponent(q) + '&type=track&limit=8');
+  if (!d.tracks?.items?.length) { resultsEl.innerHTML = '<div style="font-size:13px;color:#555;padding:8px 0;">Nincs találat.</div>'; return; }
+  resultsEl.innerHTML = '<div class="search-results-dropdown">' + d.tracks.items.map(t => {
+    const uriEsc = t.uri.replace(/'/g, "\\'");
+    return `<div class="search-result-item" onclick="addTrack('${uriEsc}','${t.id}','${t.name.replace(/'/g,"\\'")}','${t.artists.map(a=>a.name).join(', ').replace(/'/g,"\\'")}')">
+      <div class="track-name">${t.name}</div>
+      <div class="track-artist">${t.artists.map(a=>a.name).join(', ')}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+async function addTrack(uri, id, name, artist) {
+  document.getElementById('add-results').innerHTML = '';
+  document.getElementById('add-input').value = '';
+  if (allTracks.find(t => t.uri === uri)) {
+    setStatus('Ez a dal már szerepel a listában.');
+    return;
   }
+  const newTrack = { id, uri, name, artist, bpm: null, key: null };
+  allTracks.push(newTrack);
+  filteredTracks.push(newTrack);
+  drawTracks();
+  updateStats();
+  setStatus(`"${name}" hozzáadva — BPM lekérése...`);
+  const result = await getBpm(name, artist);
+  const idx = allTracks.findIndex(t => t.uri === uri);
+  if (idx >= 0) { allTracks[idx].bpm = result.bpm; allTracks[idx].key = result.key; }
+  const fi = filteredTracks.findIndex(t => t.uri === uri);
+  if (fi >= 0) { filteredTracks[fi].bpm = result.bpm; filteredTracks[fi].key = result.key; }
+  updateTrackRow(uri, result.bpm, result.key);
+  updateStats();
+  setStatus(`"${name}" hozzáadva — BPM: ${displayBpm(result.bpm) || '?'}`);
 }
 
 (async function() {
