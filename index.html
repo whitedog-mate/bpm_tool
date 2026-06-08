@@ -217,16 +217,36 @@ async function spPost(path, body) {
 function setStatus(m) { document.getElementById('status').textContent = m; }
 
 async function getBpm(name, artist) {
-  try {
-    const q = encodeURIComponent(name + ' ' + artist);
-    const res = await fetch(`${PROXY}?lookup=${q}&type=song`);
-    const data = await res.json();
-    if (data.search && Array.isArray(data.search) && data.search.length > 0) {
-      const song = data.search[0];
-      const bpm = song.tempo ? Math.round(parseFloat(song.tempo)) : null;
-      return { bpm: bpm && bpm > 0 ? bpm : null, key: song.key_of || null };
-    }
-  } catch(e) {}
+  // Try with first word of track name first, then fall back to artist first word
+  const queries = [
+    name.split(' ')[0],
+    name.split(' ').slice(0,2).join('+'),
+    artist.split(' ')[0]
+  ];
+  for (const q of queries) {
+    if (!q || q.length < 2) continue;
+    try {
+      const res = await fetch(`${PROXY}?lookup=${encodeURIComponent(q)}&type=song`);
+      const data = await res.json();
+      if (data.search && Array.isArray(data.search) && data.search.length > 0) {
+        // Find best match: title or artist matches
+        const nameLower = name.toLowerCase();
+        const artistLower = artist.toLowerCase();
+        const match = data.search.find(s =>
+          s.tempo && parseFloat(s.tempo) > 0 && (
+            s.title?.toLowerCase().includes(nameLower) ||
+            nameLower.includes(s.title?.toLowerCase()) ||
+            s.artist?.name?.toLowerCase().includes(artistLower) ||
+            artistLower.includes(s.artist?.name?.toLowerCase())
+          )
+        ) || data.search.find(s => s.tempo && parseFloat(s.tempo) > 0);
+        if (match) {
+          const bpm = Math.round(parseFloat(match.tempo));
+          return { bpm: bpm > 0 ? bpm : null, key: match.key_of || null };
+        }
+      }
+    } catch(e) {}
+  }
   return { bpm: null, key: null };
 }
 
@@ -373,7 +393,7 @@ async function doSearch() {
   statusEl.textContent = 'Keresés...';
   resultsEl.innerHTML = '';
   try {
-    const res = await fetch(`${PROXY}?lookup=${encodeURIComponent(q)}&type=both`);
+    const res = await fetch(`${PROXY}?lookup=${encodeURIComponent(q.split(' ')[0])}&type=both`);
     const data = await res.json();
     if (data.search && Array.isArray(data.search) && data.search.length > 0) {
       statusEl.textContent = data.search.length + ' találat';
