@@ -6,7 +6,7 @@
 <title>Spotify BPM Tool</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e8e8e8; min-height: 100vh; padding: 24px 16px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e8e8e8; min-height: 100vh; padding: 24px 16px 48px; }
   h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; color: #fff; }
   .sub { font-size: 14px; color: #888; margin-bottom: 24px; }
   .card { background: #161616; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
@@ -15,7 +15,7 @@
   .btn-green { border-color: #1DB954; color: #1DB954; }
   .btn-green:hover { background: #1DB95420; }
   .btn-sm { font-size: 12px; padding: 5px 12px; }
-  input[type=text], input[type=number] { background: #111; border: 0.5px solid #333; border-radius: 8px; color: #e8e8e8; font-size: 13px; padding: 7px 12px; outline: none; }
+  input[type=text], input[type=number] { background: #111; border: 0.5px solid #333; border-radius: 8px; color: #e8e8e8; font-size: 13px; padding: 7px 12px; outline: none; width: 100%; }
   input:focus { border-color: #555; }
   .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
   .stat { background: #111; border-radius: 8px; padding: 12px; }
@@ -23,24 +23,39 @@
   .stat-val { font-size: 22px; font-weight: 600; color: #fff; }
   .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
   .status { font-size: 13px; color: #666; margin-bottom: 12px; min-height: 18px; }
-  .track-header { display: grid; grid-template-columns: 1fr 44px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
-  .track-row { display: grid; grid-template-columns: 1fr 44px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; }
+  .track-header { display: grid; grid-template-columns: 1fr 56px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
+  .track-row { display: grid; grid-template-columns: 1fr 56px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; }
   .track-row:hover { background: #1a1a1a; }
   .track-row.selected { background: #1a2a1a; border-color: #1DB95440; }
   .track-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e8e8e8; }
   .track-artist { font-size: 11px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .tunebat-btn { font-size: 11px; padding: 4px 8px; color: #1DB954; border-color: #1DB95460; border-radius: 6px; white-space: nowrap; text-decoration: none; display: inline-block; border: 0.5px solid #1DB95460; }
+  .bpm-val { font-size: 13px; font-weight: 600; text-align: right; white-space: nowrap; }
+  .tunebat-btn { font-size: 11px; padding: 4px 8px; color: #1DB954; border: 0.5px solid #1DB95460; border-radius: 6px; white-space: nowrap; text-decoration: none; display: inline-block; }
   .tunebat-btn:hover { background: #1DB95420; }
   .pl-section { border-top: 0.5px solid #222; padding-top: 16px; margin-top: 16px; }
   .pl-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .pl-row input { flex: 1; min-width: 160px; }
+  .pl-row input { flex: 1; min-width: 160px; width: auto; }
   .msg-ok { color: #1DB954; font-size: 13px; margin-top: 8px; }
   .msg-err { color: #e24b4a; font-size: 13px; margin-top: 8px; }
   #auth-section { text-align: center; padding: 48px 16px; }
   #auth-section h1 { font-size: 28px; margin-bottom: 8px; }
   #auth-section .sub { margin-bottom: 32px; }
   .spotify-icon { width: 48px; height: 48px; margin: 0 auto 16px; }
-  .note { font-size: 12px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 0.5px solid #222; padding-bottom: 0; }
+  .tab { font-size: 13px; padding: 8px 16px; cursor: pointer; border-radius: 8px 8px 0 0; color: #666; border: none; background: transparent; }
+  .tab.active { color: #fff; background: #1a1a1a; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  .search-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .search-row input { flex: 1; }
+  .search-result { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 8px; background: #111; margin-bottom: 6px; }
+  .search-result-info { flex: 1; min-width: 0; }
+  .search-result-bpm { font-size: 18px; font-weight: 600; margin-left: 12px; white-space: nowrap; }
+  .search-result-key { font-size: 11px; color: #666; margin-left: 8px; }
+  .footer { text-align: center; padding: 24px 0 8px; font-size: 12px; color: #444; }
+  .footer a { color: #666; text-decoration: none; }
+  .footer a:hover { color: #999; }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 12px; background: #1a1a1a; color: #666; border: 0.5px solid #333; }
 </style>
 </head>
 <body>
@@ -48,51 +63,77 @@
 <div id="auth-section">
   <svg class="spotify-icon" viewBox="0 0 24 24" fill="#1DB954"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 11-.277-1.215c3.809-.87 7.077-.496 9.712 1.115a.623.623 0 01.207.857zm1.223-2.722a.78.78 0 01-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 01-.973-.519.781.781 0 01.52-.972c3.632-1.102 8.147-.568 11.233 1.328a.78.78 0 01.257 1.072zm.105-2.835C14.692 9.15 9.375 8.977 6.297 9.9a.937.937 0 11-.543-1.794c3.532-1.072 9.404-.865 13.115 1.339a.937.937 0 01-.955 1.622z"/></svg>
   <h1>Spotify BPM Tool</h1>
-  <p class="sub">Nézd meg hallgatott dalaid tempóját a Tunebat adatbázisából.</p>
+  <p class="sub">Nézd meg hallgatott dalaid tempóját, keress bármilyen számra BPM-et.</p>
   <button class="btn btn-green" onclick="startAuth()" style="font-size:15px; padding:12px 28px;">Bejelentkezés Spotify-ra</button>
   <p id="auth-error" style="color:#e24b4a; font-size:13px; margin-top:16px;"></p>
+  <div class="footer" style="margin-top: 48px;">BPM adatok: <a href="https://getsongbpm.com" target="_blank">GetSongBPM</a></div>
 </div>
 
 <div id="main-section" style="display:none; max-width:680px; margin:0 auto;">
   <h1>Spotify BPM Tool</h1>
   <p class="sub" id="user-label">Bejelentkezve</p>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-label">Betöltött dalok</div><div class="stat-val" id="stat-total">—</div></div>
-    <div class="stat"><div class="stat-label">Kiválasztott</div><div class="stat-val" id="stat-sel">0</div></div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('my-tracks')">⭐ Saját dalok</button>
+    <button class="tab" onclick="switchTab('search')">🔍 BPM kereső</button>
   </div>
 
-  <div class="card">
-    <div class="controls">
-      <button class="btn" onclick="loadTopTracks()">⭐ Top dalok</button>
-      <button class="btn" onclick="loadRecommended()">🎯 Ajánlott dalok</button>
-      <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
+  <!-- TAB: Saját dalok -->
+  <div class="tab-content active" id="tab-my-tracks">
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Betöltött dalok</div><div class="stat-val" id="stat-total">—</div></div>
+      <div class="stat"><div class="stat-label">Kiválasztott</div><div class="stat-val" id="stat-sel">0</div></div>
     </div>
 
-    <div class="status" id="status"></div>
-
-    <div class="note" id="note" style="display:none;">Kattints a <span style="color:#1DB954;">BPM</span> gombra bármelyik dalnál a Tunebat adatbázisában való kereséshez. Jelöld ki a dalokat, majd hozz létre belőlük playlistet.</div>
-
-    <div class="controls" style="margin-bottom:8px;" id="sort-controls" style="display:none;">
-      <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
-      <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
-      <button class="btn btn-sm" onclick="sortBy('name')">Név szerint ↕</button>
-      <button class="btn btn-sm" onclick="sortBy('artist')">Előadó szerint ↕</button>
-    </div>
-
-    <div class="track-header" id="track-header" style="display:none;">
-      <span>Dal / Előadó</span><span style="text-align:right;">BPM</span>
-    </div>
-    <div id="track-list"></div>
-
-    <div class="pl-section" id="pl-section" style="display:none;">
-      <p style="font-size:14px; font-weight:500; margin-bottom:10px;">Playlist létrehozása a kiválasztottakból</p>
-      <div class="pl-row">
-        <input type="text" id="pl-name" placeholder="Playlist neve...">
-        <button class="btn btn-green" onclick="createPlaylist()">+ Létrehozás Spotify-on</button>
+    <div class="card">
+      <div class="controls">
+        <button class="btn" onclick="loadTopTracks()">⭐ Top dalok</button>
+        <button class="btn" onclick="loadRecommended()">🎯 Ajánlott dalok</button>
+        <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
       </div>
-      <div id="pl-msg"></div>
+
+      <div class="status" id="status"></div>
+
+      <div class="controls" style="margin-bottom:8px;" id="sort-controls" style="display:none;">
+        <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
+        <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
+        <button class="btn btn-sm" onclick="sortBy('name')">Név ↕</button>
+        <button class="btn btn-sm" onclick="sortBy('artist')">Előadó ↕</button>
+      </div>
+
+      <div class="track-header" id="track-header" style="display:none;">
+        <span>Dal / Előadó</span><span style="text-align:right;">BPM</span>
+      </div>
+      <div id="track-list"></div>
+
+      <div class="pl-section" id="pl-section" style="display:none;">
+        <p style="font-size:14px; font-weight:500; margin-bottom:10px;">Playlist létrehozása a kiválasztottakból</p>
+        <div class="pl-row">
+          <input type="text" id="pl-name" placeholder="Playlist neve...">
+          <button class="btn btn-green" onclick="createPlaylist()">+ Létrehozás</button>
+        </div>
+        <div id="pl-msg"></div>
+      </div>
     </div>
+  </div>
+
+  <!-- TAB: BPM kereső -->
+  <div class="tab-content" id="tab-search">
+    <div class="card">
+      <p style="font-size:13px; color:#666; margin-bottom:12px;">Keress rá bármilyen dalra vagy előadóra — BPM és hangnem adatokkal.</p>
+      <div class="search-row">
+        <input type="text" id="search-input" placeholder="Dal vagy előadó neve..." onkeydown="if(event.key==='Enter') doSearch()">
+        <button class="btn btn-green" onclick="doSearch()" style="white-space:nowrap;">Keresés</button>
+      </div>
+      <div id="search-status" style="font-size:13px; color:#666; min-height:18px; margin-bottom:8px;"></div>
+      <div id="search-results"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    BPM adatok: <a href="https://getsongbpm.com" target="_blank">GetSongBPM.com</a>
+    &nbsp;·&nbsp;
+    <a href="#" onclick="logout(); return false;" style="color:#444;">Kijelentkezés</a>
   </div>
 </div>
 
@@ -100,6 +141,7 @@
 const CLIENT_ID = 'd6ad9141d39642b498726de612394848';
 const REDIRECT_URI = 'https://whitedog-mate.github.io/bpm_tool/';
 const SCOPES = 'user-top-read playlist-read-private playlist-modify-private playlist-modify-public';
+let GSBPM_KEY = '';
 
 let accessToken = null;
 let userId = null;
@@ -107,6 +149,12 @@ let allTracks = [];
 let filteredTracks = [];
 let selectedUris = new Set();
 let sortDir = { name: 1, artist: 1 };
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['my-tracks','search'][i] === tab));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
 
 function startAuth() {
   const verifier = generateVerifier(64);
@@ -154,6 +202,7 @@ async function initMain() {
 
 function logout() {
   sessionStorage.removeItem('sp_token');
+  sessionStorage.removeItem('gsbpm_key');
   location.reload();
 }
 
@@ -187,23 +236,16 @@ async function loadRecommended() {
 }
 
 function tunebatUrl(name, artist) {
-  const q = encodeURIComponent(name + ' ' + artist);
-  return 'https://tunebat.com/Search?q=' + q;
+  return 'https://tunebat.com/Search?q=' + encodeURIComponent(name + ' ' + artist);
 }
 
 function renderTracks(tracks) {
-  allTracks = tracks.map(t => ({
-    id: t.id,
-    uri: t.uri,
-    name: t.name,
-    artist: t.artists.map(a=>a.name).join(', ')
-  }));
+  allTracks = tracks.map(t => ({ id: t.id, uri: t.uri, name: t.name, artist: t.artists.map(a=>a.name).join(', ') }));
   filteredTracks = [...allTracks];
   selectedUris = new Set();
   updateStats();
   drawTracks();
   setStatus(allTracks.length + ' dal betöltve.');
-  document.getElementById('note').style.display = 'block';
   document.getElementById('sort-controls').style.display = 'flex';
   document.getElementById('track-header').style.display = 'grid';
 }
@@ -259,7 +301,7 @@ async function createPlaylist() {
   const msg = document.getElementById('pl-msg');
   msg.className = ''; msg.textContent = 'Létrehozás...';
   try {
-    const pl = await spPost('/users/'+userId+'/playlists', { name, public: false, description: 'BPM Tool' });
+    const pl = await spPost('/users/'+userId+'/playlists', { name, public: false, description: 'BPM Tool – getsongbpm.com' });
     await spPost('/playlists/'+pl.id+'/tracks', { uris: [...selectedUris] });
     msg.className = 'msg-ok';
     msg.textContent = '✓ Kész: "' + name + '" (' + selectedUris.size + ' dal)';
@@ -269,247 +311,71 @@ async function createPlaylist() {
   }
 }
 
-(async function() {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code');
-  const token = sessionStorage.getItem('sp_token');
-  if (code && params.get('state') === 'bpm') {
-    await exchangeCode(code);
-  } else if (token) {
-    accessToken = token;
-    await initMain();
+// BPM SEARCH via GetSongBPM
+async function doSearch() {
+  const q = document.getElementById('search-input').value.trim();
+  if (!q) return;
+  const statusEl = document.getElementById('search-status');
+  const resultsEl = document.getElementById('search-results');
+
+  if (!GSBPM_KEY) {
+    const key = prompt('Add meg a GetSongBPM API kulcsodat:');
+    if (!key) return;
+    GSBPM_KEY = key.trim();
+    sessionStorage.setItem('gsbpm_key', GSBPM_KEY);
   }
-})();
-</script>
-</body>
-</html>
-    <div class="controls">
-      <button class="btn" onclick="loadTopTracks()">⭐ Top dalok</button>
-      <button class="btn" onclick="loadRecommended()">🎯 Ajánlott dalok</button>
-      <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
-    </div>
 
-    <div class="filter-row">
-      <label>BPM szűrő:</label>
-      <input type="number" id="bpm-min" value="0" style="width:64px;">
-      <span style="color:#555;">–</span>
-      <input type="number" id="bpm-max" value="200" style="width:64px;">
-      <button class="btn btn-sm" onclick="applyFilter()">Szűrés</button>
-    </div>
+  statusEl.textContent = 'Keresés...';
+  resultsEl.innerHTML = '';
 
-    <div class="status" id="status"></div>
-
-    <div class="controls" style="margin-bottom:8px;">
-      <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
-      <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
-      <button class="btn btn-sm" onclick="sortBy('bpm')">BPM szerint ↕</button>
-      <button class="btn btn-sm" onclick="sortBy('name')">Név szerint ↕</button>
-    </div>
-
-    <div class="track-header">
-      <span></span><span>Dal / Előadó</span><span style="text-align:right;">BPM</span>
-    </div>
-    <div id="track-list"></div>
-
-    <div class="pl-section" id="pl-section" style="display:none;">
-      <p style="font-size:14px; font-weight:500; margin-bottom:10px;">Playlist létrehozása a kiválasztottakból</p>
-      <div class="pl-row">
-        <input type="text" id="pl-name" placeholder="Playlist neve...">
-        <button class="btn btn-green" onclick="createPlaylist()">+ Létrehozás Spotify-on</button>
-      </div>
-      <div id="pl-msg"></div>
-    </div>
-  </div>
-</div>
-
-<script>
-const CLIENT_ID = 'd6ad9141d39642b498726de612394848';
-const REDIRECT_URI = 'https://whitedog-mate.github.io/bpm_tool/';
-const SCOPES = 'user-top-read playlist-read-private playlist-modify-private playlist-modify-public';
-
-let accessToken = null;
-let userId = null;
-let allTracks = [];
-let filteredTracks = [];
-let selectedUris = new Set();
-let sortDir = { bpm: 1, name: 1 };
-
-function startAuth() {
-  const verifier = generateVerifier(64);
-  sessionStorage.setItem('pkce_v', verifier);
-  generateChallenge(verifier).then(challenge => {
-    const p = new URLSearchParams({ client_id: CLIENT_ID, response_type: 'code', redirect_uri: REDIRECT_URI, scope: SCOPES, code_challenge_method: 'S256', code_challenge: challenge, state: 'bpm' });
-    window.location.href = 'https://accounts.spotify.com/authorize?' + p;
-  });
-}
-
-function generateVerifier(len) {
-  const a = new Uint8Array(len); crypto.getRandomValues(a);
-  return btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-}
-
-async function generateChallenge(v) {
-  const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
-  return btoa(String.fromCharCode(...new Uint8Array(h))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-}
-
-async function exchangeCode(code) {
-  const v = sessionStorage.getItem('pkce_v');
-  const res = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'},
-    body: new URLSearchParams({ grant_type:'authorization_code', code, redirect_uri: REDIRECT_URI, client_id: CLIENT_ID, code_verifier: v })
-  });
-  const d = await res.json();
-  if (d.access_token) {
-    accessToken = d.access_token;
-    sessionStorage.setItem('sp_token', accessToken);
-    history.replaceState({}, '', REDIRECT_URI);
-    await initMain();
-  } else {
-    document.getElementById('auth-error').textContent = 'Hiba: ' + (d.error_description || JSON.stringify(d));
-  }
-}
-
-async function initMain() {
-  document.getElementById('auth-section').style.display = 'none';
-  document.getElementById('main-section').style.display = 'block';
-  const me = await spGet('/me');
-  userId = me.id;
-  document.getElementById('user-label').textContent = me.display_name || me.id;
-}
-
-function logout() {
-  sessionStorage.removeItem('sp_token');
-  location.reload();
-}
-
-async function spGet(path) {
-  const r = await fetch('https://api.spotify.com/v1' + path, { headers: { Authorization: 'Bearer ' + accessToken } });
-  return r.json();
-}
-
-async function spPost(path, body) {
-  const r = await fetch('https://api.spotify.com/v1' + path, { method:'POST', headers:{ Authorization:'Bearer '+accessToken,'Content-Type':'application/json' }, body: JSON.stringify(body) });
-  return r.json();
-}
-
-function setStatus(m) { document.getElementById('status').textContent = m; }
-
-async function loadTopTracks() {
-  setStatus('Top dalok betöltése...');
-  const d = await spGet('/me/top/tracks?limit=50&time_range=medium_term');
-  if (!d.items) { setStatus('Nem sikerült betölteni.'); return; }
-  await fetchAndRender(d.items);
-}
-
-async function loadRecommended() {
-  setStatus('Ajánlott dalok betöltése...');
-  const top = await spGet('/me/top/tracks?limit=5&time_range=short_term');
-  if (!top.items?.length) { setStatus('Nincs adat.'); return; }
-  const seeds = top.items.slice(0,5).map(t=>t.id).join(',');
-  const rec = await spGet('/recommendations?seed_tracks='+seeds+'&limit=100');
-  if (!rec.tracks) { setStatus('Nem sikerült betölteni.'); return; }
-  await fetchAndRender(rec.tracks);
-}
-
-async function fetchAndRender(tracks) {
-  setStatus('BPM adatok lekérése...');
-  const ids = tracks.map(t=>t.id);
-  let features = [];
-  for (let i=0; i<ids.length; i+=100) {
-    const d = await spGet('/audio-features?ids='+ids.slice(i,i+100).join(','));
-    if (d.audio_features) features = features.concat(d.audio_features);
-  }
-  allTracks = tracks.map((t,i) => ({
-    id: t.id, uri: t.uri, name: t.name,
-    artist: t.artists.map(a=>a.name).join(', '),
-    bpm: features[i] ? Math.round(features[i].tempo) : null
-  })).filter(t => t.bpm !== null);
-  filteredTracks = [...allTracks];
-  selectedUris = new Set();
-  updateStats();
-  renderTracks();
-  setStatus(allTracks.length + ' dal betöltve.');
-}
-
-function applyFilter() {
-  const min = parseInt(document.getElementById('bpm-min').value)||0;
-  const max = parseInt(document.getElementById('bpm-max').value)||999;
-  filteredTracks = allTracks.filter(t => t.bpm>=min && t.bpm<=max);
-  selectedUris = new Set([...selectedUris].filter(u => filteredTracks.some(t=>t.uri===u)));
-  renderTracks(); updateStats();
-  setStatus(filteredTracks.length + ' dal a szűrő után.');
-}
-
-function sortBy(key) {
-  sortDir[key] *= -1;
-  filteredTracks.sort((a,b) => sortDir[key] * (a[key] > b[key] ? 1 : -1));
-  renderTracks();
-}
-
-function selectRandom30() {
-  const s = [...filteredTracks].sort(()=>Math.random()-0.5).slice(0,30);
-  selectedUris = new Set(s.map(t=>t.uri));
-  document.querySelectorAll('.track-row').forEach(el => el.classList.toggle('selected', selectedUris.has(el.dataset.uri)));
-  updateStats();
-}
-
-function clearSel() {
-  selectedUris = new Set();
-  document.querySelectorAll('.track-row').forEach(el => el.classList.remove('selected'));
-  updateStats();
-}
-
-function toggleTrack(uri) {
-  if (selectedUris.has(uri)) selectedUris.delete(uri); else selectedUris.add(uri);
-  document.querySelector('.track-row[data-uri="'+uri+'"]')?.classList.toggle('selected');
-  updateStats();
-}
-
-function updateStats() {
-  document.getElementById('stat-total').textContent = filteredTracks.length;
-  document.getElementById('stat-avg').textContent = filteredTracks.length ? Math.round(filteredTracks.reduce((s,t)=>s+t.bpm,0)/filteredTracks.length) : '—';
-  document.getElementById('stat-sel').textContent = selectedUris.size;
-  document.getElementById('pl-section').style.display = selectedUris.size > 0 ? 'block' : 'none';
-}
-
-function bpmColor(bpm) {
-  if (bpm < 90) return '#5DCAA5';
-  if (bpm < 120) return '#378ADD';
-  if (bpm < 150) return '#EF9F27';
-  return '#E24B4A';
-}
-
-function renderTracks() {
-  const list = document.getElementById('track-list');
-  list.innerHTML = filteredTracks.map(t => `
-    <div class="track-row${selectedUris.has(t.uri)?' selected':''}" data-uri="${t.uri}" onclick="toggleTrack('${t.uri}')">
-      <span class="icon">♪</span>
-      <div>
-        <div class="track-name">${t.name}</div>
-        <div class="track-artist">${t.artist}</div>
-      </div>
-      <span class="bpm-badge" style="color:${bpmColor(t.bpm)}">${t.bpm}</span>
-    </div>`).join('');
-}
-
-async function createPlaylist() {
-  if (!selectedUris.size) return;
-  const name = document.getElementById('pl-name').value || 'BPM Mix';
-  const msg = document.getElementById('pl-msg');
-  msg.className = ''; msg.textContent = 'Létrehozás...';
   try {
-    const pl = await spPost('/users/'+userId+'/playlists', { name, public: false, description: 'BPM Tool' });
-    await spPost('/playlists/'+pl.id+'/tracks', { uris: [...selectedUris] });
-    msg.className = 'msg-ok';
-    msg.textContent = '✓ Kész: "' + name + '" (' + selectedUris.size + ' dal)';
+    const url = `https://api.getsong.co/search/?api_key=${GSBPM_KEY}&type=both&lookup=${encodeURIComponent(q)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.search && data.search.length > 0) {
+      statusEl.textContent = data.search.length + ' találat';
+      resultsEl.innerHTML = data.search.map(item => {
+        if (item.tempo) {
+          const bpm = Math.round(parseFloat(item.tempo));
+          const bpmColor = bpm < 90 ? '#5DCAA5' : bpm < 120 ? '#378ADD' : bpm < 150 ? '#EF9F27' : '#E24B4A';
+          return `<div class="search-result">
+            <div class="search-result-info">
+              <div class="track-name">${item.title || '—'}</div>
+              <div class="track-artist">${item.artist?.name || ''}</div>
+              ${item.key_of ? `<span class="tag" style="margin-top:4px; display:inline-block;">🎵 ${item.key_of}</span>` : ''}
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-end;">
+              <span class="search-result-bpm" style="color:${bpmColor}">${bpm}</span>
+              <span style="font-size:11px; color:#555;">BPM</span>
+            </div>
+          </div>`;
+        } else {
+          return `<div class="search-result">
+            <div class="search-result-info">
+              <div class="track-name">${item.name || item.title || '—'}</div>
+              <div class="track-artist">${item.from || ''}</div>
+            </div>
+            <span style="font-size:12px; color:#555;">előadó</span>
+          </div>`;
+        }
+      }).join('');
+    } else if (data.error) {
+      statusEl.textContent = 'API hiba: ' + data.error;
+      if (data.error.includes('Invalid') || data.error.includes('key')) {
+        GSBPM_KEY = '';
+        sessionStorage.removeItem('gsbpm_key');
+      }
+    } else {
+      statusEl.textContent = 'Nincs találat.';
+    }
   } catch(e) {
-    msg.className = 'msg-err';
-    msg.textContent = 'Hiba: ' + e.message;
+    statusEl.textContent = 'Hiba: ' + e.message;
   }
 }
 
 (async function() {
+  GSBPM_KEY = sessionStorage.getItem('gsbpm_key') || '';
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
   const token = sessionStorage.getItem('sp_token');
