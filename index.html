@@ -23,15 +23,15 @@
   .stat-val { font-size: 22px; font-weight: 600; color: #fff; }
   .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 12px; }
   .status { font-size: 13px; color: #666; margin-bottom: 12px; min-height: 18px; }
-  .track-header { display: grid; grid-template-columns: 1fr 56px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
-  .track-row { display: grid; grid-template-columns: 1fr 56px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; }
+  .track-header { display: grid; grid-template-columns: 1fr 90px; gap: 8px; padding: 6px 10px; font-size: 11px; color: #555; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 0.5px solid #222; }
+  .track-row { display: grid; grid-template-columns: 1fr 90px; gap: 8px; padding: 9px 10px; border-radius: 8px; align-items: center; transition: background 0.1s; border: 0.5px solid transparent; cursor: pointer; }
   .track-row:hover { background: #1a1a1a; }
   .track-row.selected { background: #1a2a1a; border-color: #1DB95440; }
   .track-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #e8e8e8; }
   .track-artist { font-size: 11px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bpm-val { font-size: 13px; font-weight: 600; text-align: right; white-space: nowrap; }
-  .tunebat-btn { font-size: 11px; padding: 4px 8px; color: #1DB954; border: 0.5px solid #1DB95460; border-radius: 6px; white-space: nowrap; text-decoration: none; display: inline-block; }
-  .tunebat-btn:hover { background: #1DB95420; }
+  .bpm-cell { display: flex; align-items: center; justify-content: flex-end; gap: 6px; }
+  .bpm-val { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .key-tag { font-size: 10px; padding: 2px 6px; border-radius: 10px; background: #1a1a1a; color: #666; border: 0.5px solid #333; white-space: nowrap; }
   .pl-section { border-top: 0.5px solid #222; padding-top: 16px; margin-top: 16px; }
   .pl-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .pl-row input { flex: 1; min-width: 160px; width: auto; }
@@ -41,21 +41,23 @@
   #auth-section h1 { font-size: 28px; margin-bottom: 8px; }
   #auth-section .sub { margin-bottom: 32px; }
   .spotify-icon { width: 48px; height: 48px; margin: 0 auto 16px; }
-  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 0.5px solid #222; padding-bottom: 0; }
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 0.5px solid #222; }
   .tab { font-size: 13px; padding: 8px 16px; cursor: pointer; border-radius: 8px 8px 0 0; color: #666; border: none; background: transparent; }
   .tab.active { color: #fff; background: #1a1a1a; }
   .tab-content { display: none; }
   .tab-content.active { display: block; }
   .search-row { display: flex; gap: 8px; margin-bottom: 12px; }
   .search-row input { flex: 1; }
-  .search-result { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 8px; background: #111; margin-bottom: 6px; }
-  .search-result-info { flex: 1; min-width: 0; }
-  .search-result-bpm { font-size: 18px; font-weight: 600; margin-left: 12px; white-space: nowrap; }
-  .search-result-key { font-size: 11px; color: #666; margin-left: 8px; }
+  .search-result { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-radius: 8px; background: #111; margin-bottom: 6px; border: 0.5px solid #1e1e1e; }
+  .search-result-bpm { font-size: 20px; font-weight: 600; text-align: right; }
   .footer { text-align: center; padding: 24px 0 8px; font-size: 12px; color: #444; }
   .footer a { color: #666; text-decoration: none; }
   .footer a:hover { color: #999; }
-  .tag { font-size: 11px; padding: 2px 8px; border-radius: 12px; background: #1a1a1a; color: #666; border: 0.5px solid #333; }
+  .loading-dot { display: inline-block; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .bpm-loading { font-size: 11px; color: #444; }
+  .filter-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .filter-row label { font-size: 13px; color: #888; white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -66,7 +68,7 @@
   <p class="sub">Nézd meg hallgatott dalaid tempóját, keress bármilyen számra BPM-et.</p>
   <button class="btn btn-green" onclick="startAuth()" style="font-size:15px; padding:12px 28px;">Bejelentkezés Spotify-ra</button>
   <p id="auth-error" style="color:#e24b4a; font-size:13px; margin-top:16px;"></p>
-  <div class="footer" style="margin-top: 48px;">BPM adatok: <a href="https://getsongbpm.com" target="_blank">GetSongBPM</a></div>
+  <div class="footer" style="margin-top:48px;">BPM adatok: <a href="https://getsongbpm.com" target="_blank">GetSongBPM</a></div>
 </div>
 
 <div id="main-section" style="display:none; max-width:680px; margin:0 auto;">
@@ -92,17 +94,26 @@
         <button class="btn btn-sm" onclick="logout()" style="margin-left:auto; color:#666;">Kijelentkezés</button>
       </div>
 
+      <div class="filter-row" id="filter-row" style="display:none;">
+        <label>BPM szűrő:</label>
+        <input type="number" id="bpm-min" value="0" style="width:64px;">
+        <span style="color:#555;">–</span>
+        <input type="number" id="bpm-max" value="200" style="width:64px;">
+        <button class="btn btn-sm" onclick="applyBpmFilter()">Szűrés</button>
+      </div>
+
       <div class="status" id="status"></div>
 
-      <div class="controls" style="margin-bottom:8px;" id="sort-controls" style="display:none;">
+      <div class="controls" id="sort-controls" style="display:none; margin-bottom:8px;">
         <button class="btn btn-sm" onclick="selectRandom30()">🎲 Véletlenszerű 30</button>
         <button class="btn btn-sm" onclick="clearSel()">Kijelölés törlése</button>
         <button class="btn btn-sm" onclick="sortBy('name')">Név ↕</button>
         <button class="btn btn-sm" onclick="sortBy('artist')">Előadó ↕</button>
+        <button class="btn btn-sm" onclick="sortBy('bpm')">BPM ↕</button>
       </div>
 
       <div class="track-header" id="track-header" style="display:none;">
-        <span>Dal / Előadó</span><span style="text-align:right;">BPM</span>
+        <span>Dal / Előadó</span><span style="text-align:right;">BPM / Hangnem</span>
       </div>
       <div id="track-list"></div>
 
@@ -123,7 +134,7 @@
       <p style="font-size:13px; color:#666; margin-bottom:12px;">Keress rá bármilyen dalra vagy előadóra — BPM és hangnem adatokkal.</p>
       <div class="search-row">
         <input type="text" id="search-input" placeholder="Dal vagy előadó neve..." onkeydown="if(event.key==='Enter') doSearch()">
-        <button class="btn btn-green" onclick="doSearch()" style="white-space:nowrap;">Keresés</button>
+        <button class="btn btn-green" onclick="doSearch()" style="white-space:nowrap; width:auto;">Keresés</button>
       </div>
       <div id="search-status" style="font-size:13px; color:#666; min-height:18px; margin-bottom:8px;"></div>
       <div id="search-results"></div>
@@ -141,14 +152,14 @@
 const CLIENT_ID = 'd6ad9141d39642b498726de612394848';
 const REDIRECT_URI = 'https://whitedog-mate.github.io/bpm_tool/';
 const SCOPES = 'user-top-read playlist-read-private playlist-modify-private playlist-modify-public';
-let GSBPM_KEY = '';
+const GSBPM_KEY = '8e77c3f892391ccf6ea682cdd7a2972b';
 
 let accessToken = null;
 let userId = null;
 let allTracks = [];
 let filteredTracks = [];
 let selectedUris = new Set();
-let sortDir = { name: 1, artist: 1 };
+let sortDir = { name: 1, artist: 1, bpm: 1 };
 
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['my-tracks','search'][i] === tab));
@@ -202,7 +213,6 @@ async function initMain() {
 
 function logout() {
   sessionStorage.removeItem('sp_token');
-  sessionStorage.removeItem('gsbpm_key');
   location.reload();
 }
 
@@ -218,11 +228,32 @@ async function spPost(path, body) {
 
 function setStatus(m) { document.getElementById('status').textContent = m; }
 
+async function getBpmForTrack(name, artist) {
+  try {
+    const q = encodeURIComponent(name + ' ' + artist);
+    const res = await fetch(`https://api.getsong.co/search/?api_key=${GSBPM_KEY}&type=song&lookup=${q}`);
+    const data = await res.json();
+    if (data.search && data.search.length > 0) {
+      const song = data.search[0];
+      return { bpm: song.tempo ? Math.round(parseFloat(song.tempo)) : null, key: song.key_of || null };
+    }
+  } catch(e) {}
+  return { bpm: null, key: null };
+}
+
+function bpmColor(bpm) {
+  if (!bpm) return '#555';
+  if (bpm < 90) return '#5DCAA5';
+  if (bpm < 120) return '#378ADD';
+  if (bpm < 150) return '#EF9F27';
+  return '#E24B4A';
+}
+
 async function loadTopTracks() {
   setStatus('Top dalok betöltése...');
   const d = await spGet('/me/top/tracks?limit=50&time_range=medium_term');
   if (!d.items || !d.items.length) { setStatus('Nem sikerült betölteni.'); return; }
-  renderTracks(d.items);
+  await loadTracksWithBpm(d.items);
 }
 
 async function loadRecommended() {
@@ -232,27 +263,70 @@ async function loadRecommended() {
   const seeds = top.items.slice(0,5).map(t=>t.id).join(',');
   const rec = await spGet('/recommendations?seed_tracks='+seeds+'&limit=100');
   if (!rec.tracks || !rec.tracks.length) { setStatus('Nem sikerült betölteni.'); return; }
-  renderTracks(rec.tracks);
+  await loadTracksWithBpm(rec.tracks);
 }
 
-function tunebatUrl(name, artist) {
-  return 'https://tunebat.com/Search?q=' + encodeURIComponent(name + ' ' + artist);
-}
-
-function renderTracks(tracks) {
-  allTracks = tracks.map(t => ({ id: t.id, uri: t.uri, name: t.name, artist: t.artists.map(a=>a.name).join(', ') }));
+async function loadTracksWithBpm(tracks) {
+  allTracks = tracks.map(t => ({
+    id: t.id, uri: t.uri,
+    name: t.name,
+    artist: t.artists.map(a=>a.name).join(', '),
+    bpm: null, key: null
+  }));
   filteredTracks = [...allTracks];
   selectedUris = new Set();
-  updateStats();
-  drawTracks();
-  setStatus(allTracks.length + ' dal betöltve.');
   document.getElementById('sort-controls').style.display = 'flex';
   document.getElementById('track-header').style.display = 'grid';
+  document.getElementById('filter-row').style.display = 'flex';
+  updateStats();
+  drawTracks();
+  setStatus(`${allTracks.length} dal betöltve — BPM lekérése folyamatban...`);
+
+  // fetch BPM one by one, update UI as they come in
+  for (let i = 0; i < allTracks.length; i++) {
+    const t = allTracks[i];
+    const result = await getBpmForTrack(t.name, t.artist);
+    allTracks[i].bpm = result.bpm;
+    allTracks[i].key = result.key;
+    // update the filtered copy too
+    const fi = filteredTracks.findIndex(ft => ft.uri === t.uri);
+    if (fi >= 0) { filteredTracks[fi].bpm = result.bpm; filteredTracks[fi].key = result.key; }
+    // update just this row in DOM
+    updateTrackRow(t.uri, result.bpm, result.key);
+    setStatus(`BPM lekérése: ${i+1} / ${allTracks.length}`);
+  }
+  setStatus(`${allTracks.length} dal betöltve — BPM kész.`);
+}
+
+function updateTrackRow(uri, bpm, key) {
+  const row = document.querySelector(`.track-row[data-uri="${uri}"]`);
+  if (!row) return;
+  const cell = row.querySelector('.bpm-cell');
+  if (!cell) return;
+  if (bpm) {
+    cell.innerHTML = `<span class="bpm-val" style="color:${bpmColor(bpm)}">${bpm}</span>${key ? `<span class="key-tag">${key}</span>` : ''}`;
+  } else {
+    cell.innerHTML = `<span class="bpm-loading">—</span>`;
+  }
+}
+
+function applyBpmFilter() {
+  const min = parseInt(document.getElementById('bpm-min').value) || 0;
+  const max = parseInt(document.getElementById('bpm-max').value) || 999;
+  filteredTracks = allTracks.filter(t => t.bpm !== null && t.bpm >= min && t.bpm <= max);
+  selectedUris = new Set([...selectedUris].filter(u => filteredTracks.some(t => t.uri === u)));
+  drawTracks();
+  updateStats();
+  setStatus(filteredTracks.length + ' dal a szűrő után.');
 }
 
 function sortBy(key) {
   sortDir[key] *= -1;
-  filteredTracks.sort((a,b) => sortDir[key] * a[key].localeCompare(b[key]));
+  if (key === 'bpm') {
+    filteredTracks.sort((a,b) => sortDir[key] * ((a.bpm||0) - (b.bpm||0)));
+  } else {
+    filteredTracks.sort((a,b) => sortDir[key] * a[key].localeCompare(b[key]));
+  }
   drawTracks();
 }
 
@@ -284,13 +358,15 @@ function updateStats() {
 function drawTracks() {
   const list = document.getElementById('track-list');
   list.innerHTML = filteredTracks.map(t => {
-    const url = tunebatUrl(t.name, t.artist);
+    const bpmHtml = t.bpm
+      ? `<span class="bpm-val" style="color:${bpmColor(t.bpm)}">${t.bpm}</span>${t.key ? `<span class="key-tag">${t.key}</span>` : ''}`
+      : `<span class="bpm-loading">...</span>`;
     return `<div class="track-row${selectedUris.has(t.uri)?' selected':''}" data-uri="${t.uri}" onclick="toggleTrack('${t.uri}')">
       <div>
         <div class="track-name">${t.name}</div>
         <div class="track-artist">${t.artist}</div>
       </div>
-      <a href="${url}" target="_blank" class="tunebat-btn" onclick="event.stopPropagation()">BPM</a>
+      <div class="bpm-cell">${bpmHtml}</div>
     </div>`;
   }).join('');
 }
@@ -311,61 +387,44 @@ async function createPlaylist() {
   }
 }
 
-// BPM SEARCH via GetSongBPM
 async function doSearch() {
   const q = document.getElementById('search-input').value.trim();
   if (!q) return;
   const statusEl = document.getElementById('search-status');
   const resultsEl = document.getElementById('search-results');
-
-  if (!GSBPM_KEY) {
-    const key = prompt('Add meg a GetSongBPM API kulcsodat:');
-    if (!key) return;
-    GSBPM_KEY = key.trim();
-    sessionStorage.setItem('gsbpm_key', GSBPM_KEY);
-  }
-
   statusEl.textContent = 'Keresés...';
   resultsEl.innerHTML = '';
-
   try {
-    const url = `https://api.getsong.co/search/?api_key=${GSBPM_KEY}&type=both&lookup=${encodeURIComponent(q)}`;
-    const res = await fetch(url);
+    const res = await fetch(`https://api.getsong.co/search/?api_key=${GSBPM_KEY}&type=both&lookup=${encodeURIComponent(q)}`);
     const data = await res.json();
-
     if (data.search && data.search.length > 0) {
       statusEl.textContent = data.search.length + ' találat';
       resultsEl.innerHTML = data.search.map(item => {
         if (item.tempo) {
           const bpm = Math.round(parseFloat(item.tempo));
-          const bpmColor = bpm < 90 ? '#5DCAA5' : bpm < 120 ? '#378ADD' : bpm < 150 ? '#EF9F27' : '#E24B4A';
           return `<div class="search-result">
-            <div class="search-result-info">
+            <div style="flex:1; min-width:0;">
               <div class="track-name">${item.title || '—'}</div>
               <div class="track-artist">${item.artist?.name || ''}</div>
-              ${item.key_of ? `<span class="tag" style="margin-top:4px; display:inline-block;">🎵 ${item.key_of}</span>` : ''}
+              ${item.key_of ? `<span class="key-tag" style="margin-top:4px; display:inline-block;">${item.key_of}</span>` : ''}
             </div>
-            <div style="display:flex; flex-direction:column; align-items:flex-end;">
-              <span class="search-result-bpm" style="color:${bpmColor}">${bpm}</span>
-              <span style="font-size:11px; color:#555;">BPM</span>
+            <div style="text-align:right; margin-left:12px;">
+              <div class="search-result-bpm" style="color:${bpmColor(bpm)}">${bpm}</div>
+              <div style="font-size:11px; color:#555;">BPM</div>
             </div>
           </div>`;
         } else {
           return `<div class="search-result">
-            <div class="search-result-info">
+            <div style="flex:1; min-width:0;">
               <div class="track-name">${item.name || item.title || '—'}</div>
               <div class="track-artist">${item.from || ''}</div>
             </div>
-            <span style="font-size:12px; color:#555;">előadó</span>
+            <span style="font-size:12px; color:#555; margin-left:8px;">előadó</span>
           </div>`;
         }
       }).join('');
     } else if (data.error) {
       statusEl.textContent = 'API hiba: ' + data.error;
-      if (data.error.includes('Invalid') || data.error.includes('key')) {
-        GSBPM_KEY = '';
-        sessionStorage.removeItem('gsbpm_key');
-      }
     } else {
       statusEl.textContent = 'Nincs találat.';
     }
@@ -375,7 +434,6 @@ async function doSearch() {
 }
 
 (async function() {
-  GSBPM_KEY = sessionStorage.getItem('gsbpm_key') || '';
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
   const token = sessionStorage.getItem('sp_token');
